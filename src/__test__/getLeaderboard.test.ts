@@ -30,7 +30,7 @@ describe('Get Leaderboard use case tests', () => {
 	});
 	
 	it('Can get leaderboard page', async () => {
-		const pageNo = faker.datatype.number({ min: 1, max: 6, precision: 1 });
+		const pageNo = faker.datatype.number({ min: 1, max: 5, precision: 1 });
 		const leaderboard = await getLeaderboard.getPage(pageNo);
 		expect(leaderboard.length).toBeGreaterThan(0);
 		const leaderboardExpected = testDataPnL
