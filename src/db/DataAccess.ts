@@ -74,7 +74,12 @@ export default class DataAccess implements IDataAccess {
 	}
 
 	async fetchUsernamesByUserIds(userIds: string[]): Promise<{ [userId: string] : string | null }> {
-		throw new Error('Method not implemented.');
+		try {
+			const result = await this.redis.mget(...userIds);
+			return Object.fromEntries(result.map((username, i) => [userIds[i], username]));
+		} catch (err: any) {
+			this.handleDatabaseError(err, 'Failed to fetch usernames by userIds from db');
+		}
 	}
 
 	handleDatabaseError(err: any, message: string): never {
