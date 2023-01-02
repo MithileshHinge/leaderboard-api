@@ -18,4 +18,8 @@ export default class DataAccess implements IDataAccess {
 	}): Promise<void> {
 		throw new Error('Method not implemented.');
 	}
+
+	async fetchRankByUserId(userId: string): Promise<number | null> {
+		throw new Error('Method not implemented.');
+	}
 }

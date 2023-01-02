@@ -26,4 +26,11 @@ export interface IDataAccess {
 		userId: string;
 		pnlValue: number;
 	}): Promise<void>;
+
+	/**
+	 * Fetch rank by userId
+	 * @throws DatabaseError if operation failed
+	 * @returns Promise to return rank if pnlValue is found otherwise null
+	 */
+	fetchRankByUserId(userId: string): Promise<number | null>;
 }
