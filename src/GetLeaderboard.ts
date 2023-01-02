@@ -2,11 +2,12 @@ import ValidationError from './common/errors/ValidationError';
 import { IDataAccess } from './IDataAccess';
 
 export default class GetLeaderboard {
-	private RESULTS_PER_PAGE = 50;
+	private RESULTS_PER_PAGE: number;
 	private dataAccess: IDataAccess;
 
-	constructor(dataAccess: IDataAccess) {
+	constructor(dataAccess: IDataAccess, resultsPerPage: number) {
 		this.dataAccess = dataAccess;
+		this.RESULTS_PER_PAGE = resultsPerPage;
 	}
 
 	/**
@@ -19,7 +20,13 @@ export default class GetLeaderboard {
 			throw new ValidationError('pageNo is invalid');
 		}
 
-		const rankings = await this.dataAccess.fetchRankingsByRange((pageNo - 1) * this.RESULTS_PER_PAGE, pageNo * this.RESULTS_PER_PAGE - 1);
-		return rankings;
+		// TODO: The two following db calls can be combined into single call for some performance improvement (time complexity will remain the same (O(log(n) + m)))
+		const rankings = await this.dataAccess.fetchRankingsByRange((pageNo - 1) * this.RESULTS_PER_PAGE + 1, pageNo * this.RESULTS_PER_PAGE);
+		const usernames = await this.dataAccess.fetchUsernamesByUserIds(rankings.map(({ userId }) => userId));
+		return rankings.map(({ userId, pnlValue}) => ({
+			userId,
+			username: usernames[userId],
+			pnlValue,
+		}));
 	}
 }

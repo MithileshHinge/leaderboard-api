@@ -58,7 +58,7 @@ export default class DataAccess implements IDataAccess {
 		pnlValue: number;
 	}[]> {
 		try {
-			const result = await this.redis.zrevrange(DATABASE_CONFIG.REDIS_SORTED_SET_NAME, from, to, 'WITHSCORES');
+			const result = await this.redis.zrevrange(DATABASE_CONFIG.REDIS_SORTED_SET_NAME, from - 1, to - 1, 'WITHSCORES');
 			return result.reduce((a: any, c, i) => {
 				const idx = Math.floor(i / 2);
 				if (i % 2) {
@@ -71,6 +71,10 @@ export default class DataAccess implements IDataAccess {
 		} catch (err: any) {
 			this.handleDatabaseError(err, 'Failed to fetch rankings by range from db');
 		}
+	}
+
+	async fetchUsernamesByUserIds(userIds: string[]): Promise<{ [userId: string] : string | null }> {
+		throw new Error('Method not implemented.');
 	}
 
 	handleDatabaseError(err: any, message: string): never {

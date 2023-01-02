@@ -1,4 +1,4 @@
-import { randomInt } from "crypto";
+import { faker } from "@faker-js/faker";
 import { forEachAsync } from "../../common/helpers";
 import id from "../../common/id";
 import { DATABASE_CONFIG } from "../../config";
@@ -12,7 +12,7 @@ describe('Data Access implementation tests', () => {
 
 	const testData = new Array(50).fill(null).map((item) => ({
 		userId: id.createId(),
-		pnlValue: randomInt(-1000, 3000)/10,
+		pnlValue: faker.datatype.number({ min: -100, max: 300, precision: 0.1 }),
 	}));
 
 	beforeEach(async () => {
@@ -60,6 +60,6 @@ describe('Data Access implementation tests', () => {
 	it('Can fetch rankings by range', async () => {
 		const from = 12;
 		const to = 35;
-		await expect(dataAccess.fetchRankingsByRange(from, to)).resolves.toEqual(testData.sort((a, b) => b.pnlValue - a.pnlValue).slice(from, to + 1));
+		await expect(dataAccess.fetchRankingsByRange(from, to)).resolves.toEqual(testData.sort((a, b) => b.pnlValue - a.pnlValue).slice(from - 1, to));
 	});
 });

@@ -35,7 +35,7 @@ export interface IDataAccess {
 	fetchRankByUserId(userId: string): Promise<number | null>;
 
 	/**
-	 * Fetch rankings by range (all inclusive)
+	 * Fetch rankings by range (all inclusive, rank starts from 1, not 0)
 	 * @throws DatabaseError if operation failed
 	 * @returns Promise to return array of { userId, pnlValue } objects sorted by rank
 	 */
@@ -43,4 +43,11 @@ export interface IDataAccess {
 		userId: string;
 		pnlValue: number;
 	}[]>;
+
+	/**
+	 * Fetch names of users by userIds
+	 * @throws DatabaseError if operation failed
+	 * @returns Promise to return object map of userIds to usernames, username is null for non-existent userIds
+	 */
+	fetchUsernamesByUserIds(userIds: string[]): Promise<{ [userId: string] : string | null}>;
 }

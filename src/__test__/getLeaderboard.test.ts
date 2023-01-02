@@ -1,4 +1,4 @@
-import { randomInt } from "crypto";
+import { faker } from '@faker-js/faker';
 import ValidationError from "../common/errors/ValidationError";
 import id from "../common/id";
 import DataAccess from "../db/DataAccess";
@@ -8,13 +8,18 @@ jest.mock('../db/DataAccess');
 
 describe('Get Leaderboard use case tests', () => {
 	const mockDataAccess = new DataAccess() as jest.Mocked<DataAccess>;
-	mockDataAccess.fetchRankingsByRange.mockImplementation(async (from, to) => Array(to - from).map(() => ({
+	const testDataPnL = new Array(50).fill(null).map((item) => ({
 		userId: id.createId(),
-		pnlValue: randomInt(-100, 300),
-	})));
-	const getLeaderboard = new GetLeaderboard(mockDataAccess);
-	
-	const testUserId = id.createId();
+		pnlValue: faker.datatype.number({ min: -100, max: 300, precision: 0.1 }),
+	}));
+	const testDataUsernames: { [userId: string]: string} = {}
+	testDataPnL.forEach(({ userId }) => {
+		testDataUsernames[userId] = faker.internet.userName();
+	});
+	mockDataAccess.fetchUsernamesByUserIds.mockImplementation(async (userIds) => Object.fromEntries(Object.entries(testDataUsernames).filter(([userId, username]) => userIds.includes(userId))));
+	mockDataAccess.fetchRankingsByRange.mockImplementation(async (from, to) => testDataPnL.sort((a, b) => b.pnlValue - a.pnlValue).slice(from - 1, to));
+	const resultsPerPage = 10
+	const getLeaderboard = new GetLeaderboard(mockDataAccess, resultsPerPage);
 
 	afterEach(() => {
 		Object.values(mockDataAccess).forEach((mockMethod) => {
@@ -25,14 +30,20 @@ describe('Get Leaderboard use case tests', () => {
 	});
 	
 	it('Can get leaderboard page', async () => {
-		const leaderboard = await getLeaderboard.getPage(randomInt(1, 10));
+		const pageNo = faker.datatype.number({ min: 1, max: 6, precision: 1 });
+		const leaderboard = await getLeaderboard.getPage(pageNo);
 		expect(leaderboard.length).toBeGreaterThan(0);
-		leaderboard.forEach((item) => {
-			expect(item).toStrictEqual(expect.objectContaining({
-				userId: expect.any(String),
-				pnlValue: expect.any(Number),
+		const leaderboardExpected = testDataPnL
+			.sort((a, b) => b.pnlValue - a.pnlValue)
+			.slice((pageNo - 1) * resultsPerPage, pageNo * resultsPerPage)
+			.map(({ userId, pnlValue }) => ({
+				userId,
+				username: testDataUsernames[userId],
+				pnlValue,
 			}));
-		});
+		expect(leaderboard).toStrictEqual(leaderboardExpected);
+		expect(mockDataAccess.fetchUsernamesByUserIds).toHaveBeenCalled();
+		expect(mockDataAccess.fetchRankingsByRange).toHaveBeenCalled();
 	});
 
 	it('Throw error if pageNo <= 0', async () => {
