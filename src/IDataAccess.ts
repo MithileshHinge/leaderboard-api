@@ -17,4 +17,13 @@ export interface IDataAccess {
 	 * @returns Promise to return pnlValue if found, otherwise null
 	 */
 	fetchPnLValue(userId: string): Promise<number | null>;
+
+	/**
+	 * Update pnlValue for given userId
+	 * @throws DatabaseError if operation failed
+	 */
+	updatePnLValue({userId, pnlValue}: {
+		userId: string;
+		pnlValue: number;
+	}): Promise<void>;
 }

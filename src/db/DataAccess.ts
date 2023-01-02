@@ -11,4 +11,11 @@ export default class DataAccess implements IDataAccess {
 	async fetchPnLValue(userId: string): Promise<number | null> {
 		throw new Error('Method not implemented.');
 	}
+
+	async updatePnLValue({ userId, pnlValue }: {
+		userId: string;
+		pnlValue: number;
+	}): Promise<void> {
+		throw new Error('Method not implemented.');
+	}
 }
