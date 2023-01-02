@@ -1,7 +1,7 @@
-import ValidationError from "../common/errors/ValidationError";
-import id from "../common/id";
-import DataAccess from "../db/DataAccess";
-import UpdatePnL from "../UpdatePnL";
+import ValidationError from '../common/errors/ValidationError';
+import id from '../common/id';
+import DataAccess from '../db/DataAccess';
+import UpdatePnL from '../UpdatePnL';
 jest.mock('../db/DataAccess');
 
 describe('Update PnL use case tests', () => {
