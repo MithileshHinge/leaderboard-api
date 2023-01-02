@@ -22,4 +22,11 @@ export default class DataAccess implements IDataAccess {
 	async fetchRankByUserId(userId: string): Promise<number | null> {
 		throw new Error('Method not implemented.');
 	}
+
+	async fetchRankingsByRange(from: number, to: number): Promise<{
+		userId: string;
+		pnlValue: number;
+	}[]> {
+		throw new Error('Method not implemented.');
+	}
 }

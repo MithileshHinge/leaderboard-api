@@ -33,4 +33,14 @@ export interface IDataAccess {
 	 * @returns Promise to return rank if pnlValue is found otherwise null
 	 */
 	fetchRankByUserId(userId: string): Promise<number | null>;
+
+	/**
+	 * Fetch rankings by range (all inclusive)
+	 * @throws DatabaseError if operation failed
+	 * @returns Promise to return array of { userId, pnlValue } objects sorted by rank
+	 */
+	fetchRankingsByRange(from: number, to: number): Promise<{
+		userId: string;
+		pnlValue: number;
+	}[]>;
 }
