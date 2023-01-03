@@ -10,3 +10,5 @@ export const JSON_SECRET = process.env.JSON_SECRET || 'secret';
 export const SERVER_CONFIG = {
 	PORT: 3000,
 };
+
+export const RESULTS_PER_PAGE = 50;

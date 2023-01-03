@@ -15,13 +15,14 @@ export default class GetLeaderboard {
 	 * @param pageNo leaderboard page no
 	 * @returns Promise to return array of {userId, pnlValue} objects sorted by rank
 	 */
-	async getPage(pageNo: number) {
-		if (typeof pageNo !== 'number' || pageNo <= 0) {
+	async getPage(pageNo: number | string) {
+		let pageNoValidated: number = typeof pageNo === 'number' ? pageNo : parseInt(pageNo, 10);
+		if (pageNoValidated <= 0) {
 			throw new ValidationError('pageNo is invalid');
 		}
 
 		// TODO: The two following db calls can be combined into single call for some performance improvement (time complexity will remain the same (O(log(n) + m)))
-		const rankings = await this.dataAccess.fetchRankingsByRange((pageNo - 1) * this.RESULTS_PER_PAGE + 1, pageNo * this.RESULTS_PER_PAGE);
+		const rankings = await this.dataAccess.fetchRankingsByRange((pageNoValidated - 1) * this.RESULTS_PER_PAGE + 1, pageNoValidated * this.RESULTS_PER_PAGE);
 		const usernames = await this.dataAccess.fetchUsernamesByUserIds(rankings.map(({ userId }) => userId));
 		return rankings.map(({ userId, pnlValue}) => ({
 			userId,
