@@ -16,7 +16,7 @@ export default class GetLeaderboard {
 	 * @returns Promise to return array of {userId, pnlValue} objects sorted by rank
 	 */
 	async getPage(pageNo: number) {
-		if (typeof pageNo === 'number' && pageNo <= 0) {
+		if (typeof pageNo !== 'number' || pageNo <= 0) {
 			throw new ValidationError('pageNo is invalid');
 		}
 
