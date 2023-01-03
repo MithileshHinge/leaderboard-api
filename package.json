@@ -4,7 +4,7 @@
   "description": "Leaderboard API",
   "main": "src/api/api.ts",
   "scripts": {
-    "test": "nodemon --exec jest --testPathPattern=src/__test__/e2e",
+    "test": "nodemon --exec jest",
     "start:dev": "NODE_ENV=development nodemon",
     "build": "rimraf ./dist && tsc",
     "start:prod": "NODE_ENV=production npm run build && node dist/api/api.js",
