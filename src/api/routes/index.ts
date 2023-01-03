@@ -1,4 +1,5 @@
 import getLeaderboardController from '../controllers/getLeaderboardController';
+import getRankController from '../controllers/getRankController';
 import patchPnLController from '../controllers/patchPnLController';
 import postPnLController from '../controllers/postPnLController';
 import authorizationMiddleware from '../services/auth.service';
@@ -17,6 +18,10 @@ const routes: {
 	{
 		path: '/leaderboard',
 		get: [getLeaderboardController],
+	},
+	{
+		path: '/rank',
+		get: [authorizationMiddleware, getRankController],
 	},
 ];
 
