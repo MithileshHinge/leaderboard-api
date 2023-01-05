@@ -46,7 +46,16 @@ describe('Get Leaderboard use case tests', () => {
 		expect(mockDataAccess.fetchRankingsByRange).toHaveBeenCalled();
 	});
 
-	it('Throw error if pageNo <= 0', async () => {
-		await expect(getLeaderboard.getPage(0)).rejects.toThrow(ValidationError);
+	describe('Throw error if pageNo value is invalid', () => {
+		[null, undefined, -1, 0, '1'].forEach((pageNo: any) => {
+			it(`Should throw error for pageNo: ${pageNo}`, async () => {
+				await expect(getLeaderboard.getPage(0)).rejects.toThrow(ValidationError);
+			});
+		});
+	});
+
+	it('Return empty array if pageNo > totalPages', async () => {
+		const totalPages = Math.ceil(testDataPnL.length / resultsPerPage);
+		await expect(getLeaderboard.getPage(totalPages + 1)).resolves.toStrictEqual([]);
 	});
 });

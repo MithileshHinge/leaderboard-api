@@ -37,7 +37,7 @@ export interface IDataAccess {
 	/**
 	 * Fetch rankings by range (all inclusive, rank starts from 1, not 0)
 	 * @throws DatabaseError if operation failed
-	 * @returns Promise to return array of { userId, pnlValue } objects sorted by rank
+	 * @returns Promise to return array of { userId, pnlValue } objects sorted by rank, returns empty array [] if none are found in the given range
 	 */
 	fetchRankingsByRange(from: number, to: number): Promise<{
 		userId: string;

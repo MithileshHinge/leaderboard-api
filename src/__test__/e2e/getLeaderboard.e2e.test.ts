@@ -52,4 +52,10 @@ describe('GET /leaderboard e2e tests', () => {
 		const pageNo = faker.datatype.number({ min: -1, max: 0, precision: 1 });
 		await request(app).get('/leaderboard').query({ pageNo }).expect(400);
 	});
+
+	it('Respond with empty array if pageNo >= totalPages', async () => {
+		const totalPages = Math.ceil(testDataPnL.length / RESULTS_PER_PAGE);
+		const { body } = await request(app).get('/leaderboard').query({ pageNo: totalPages + 1 }).expect(200);
+		expect(body).toStrictEqual([]);
+	});
 });

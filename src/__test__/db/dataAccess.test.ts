@@ -68,6 +68,12 @@ describe('Data Access implementation tests', () => {
 		await expect(dataAccess.fetchRankingsByRange(from, to)).resolves.toEqual(testDataPnL.sort((a, b) => b.pnlValue - a.pnlValue).slice(from - 1, to));
 	});
 
+	it('Returns empty array if rankings not found in range', async () => {
+		const from = 60;
+		const to = 70;
+		await expect(dataAccess.fetchRankingsByRange(from, to)).resolves.toStrictEqual([]);
+	});
+
 	it('Can fetch usernames by userIds', async () => {
 		await expect(dbConnection.redis.mset(testDataUsernames)).resolves.not.toThrowError();
 		await expect(dataAccess.fetchUsernamesByUserIds(Object.keys(testDataUsernames))).resolves.toEqual(testDataUsernames);
