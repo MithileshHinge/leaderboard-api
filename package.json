@@ -8,7 +8,8 @@
     "start:dev": "NODE_ENV=development nodemon",
     "build": "rimraf ./dist && tsc",
     "start:prod": "NODE_ENV=production npm run build && node dist/api/index.js",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+	"seed:dev": "ts-node ./src/scripts/seedData.ts"
   },
   "author": "Mithilesh Hinge",
   "license": "ISC",
