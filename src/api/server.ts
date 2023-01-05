@@ -1,6 +1,8 @@
+import cors from 'cors';
 import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import { hasKey } from '../common/helpers';
+import { BASE_DOMAIN } from '../config';
 import handleExpressRequest from './handleExpressRequest';
 import routes from './routes';
 
@@ -17,6 +19,9 @@ app.use(morgan((tokens, req, res) => [
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('trust proxy', 1);
+app.use(cors({
+	origin: BASE_DOMAIN,
+}));
 
 routes.forEach((route) => {
 	const { path, ...controllers } = route;

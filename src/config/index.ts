@@ -11,4 +11,6 @@ export const SERVER_CONFIG = {
 	PORT: 3000,
 };
 
+export const BASE_DOMAIN = 'http://localhost:8080';
+
 export const RESULTS_PER_PAGE = 50;

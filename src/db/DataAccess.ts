@@ -84,7 +84,7 @@ export default class DataAccess implements IDataAccess {
 
 	handleDatabaseError(err: any, message: string): never {
 		const databaseError = new DatabaseError(message);
-  		databaseError.stack = err.stack;
-  		throw databaseError;
+		databaseError.stack = err.stack;
+		throw databaseError;
 	}
 }
