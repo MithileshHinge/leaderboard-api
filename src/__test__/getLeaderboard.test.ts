@@ -10,7 +10,7 @@ describe('Get Leaderboard use case tests', () => {
 	const mockDataAccess = new DataAccess() as jest.Mocked<DataAccess>;
 	const testDataPnL = new Array(50).fill(null).map((item) => ({
 		userId: id.createId(),
-		pnlValue: faker.datatype.number({ min: -100, max: 300, precision: 0.1 }),
+		pnlValue: faker.datatype.number({ min: -100, max: 300, precision: 0.0001 }),
 	}));
 	const testDataUsernames: { [userId: string]: string} = {};
 	testDataPnL.forEach(({ userId }) => {
