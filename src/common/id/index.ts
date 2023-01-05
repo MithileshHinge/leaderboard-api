@@ -19,7 +19,7 @@ export interface Id {
 	 * @returns true if id is valid, else returns false
 	 */
 	isValidId(id: string): boolean;
-};
+}
 
 let counter = Math.floor(Math.random() * 0xffffff);
 const checkForHexRegExp = /^[0-9a-fA-F]{24}$/;

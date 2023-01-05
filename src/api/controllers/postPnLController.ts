@@ -12,7 +12,7 @@ const postPnLController: IBaseController = async (req) => {
 
 		return {
 			statusCode: HTTPResponseCode.CREATED,
-		}
+		};
 	} catch (err: any) {
 		return handleControllerError(err);
 	}

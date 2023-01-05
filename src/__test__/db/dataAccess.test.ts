@@ -1,9 +1,9 @@
-import { faker } from "@faker-js/faker";
-import { forEachAsync } from "../../common/helpers";
-import id from "../../common/id";
-import { DATABASE_CONFIG } from "../../config";
-import DataAccess from "../../db/DataAccess";
-import DbConnection from "../../db/DbConnection";
+import { faker } from '@faker-js/faker';
+import { forEachAsync } from '../../common/helpers';
+import id from '../../common/id';
+import { DATABASE_CONFIG } from '../../config';
+import DataAccess from '../../db/DataAccess';
+import DbConnection from '../../db/DbConnection';
 
 describe('Data Access implementation tests', () => {
 	const dbConnection = new DbConnection();
@@ -15,7 +15,7 @@ describe('Data Access implementation tests', () => {
 		pnlValue: faker.datatype.number({ min: -100, max: 300, precision: 0.1 }),
 	}));
 
-	const testDataUsernames: { [userId: string]: string} = {}
+	const testDataUsernames: { [userId: string]: string} = {};
 	testDataPnL.forEach(({ userId }) => {
 		testDataUsernames[userId] = faker.internet.userName();
 	});
@@ -32,11 +32,11 @@ describe('Data Access implementation tests', () => {
 
 	afterAll(async () => {
 		await dbConnection.close();
-	})
+	});
 
 	it('Can insert PnL value into db', async () => {
 		await expect(dataAccess.insertPnLValue({ userId: testUserId, pnlValue: -20 })).resolves.not.toThrowError();
-		await expect(dbConnection.redis.zscore(DATABASE_CONFIG.REDIS_SORTED_SET_NAME, testUserId)).resolves.toBe("-20");
+		await expect(dbConnection.redis.zscore(DATABASE_CONFIG.REDIS_SORTED_SET_NAME, testUserId)).resolves.toBe('-20');
 	});
 
 	it('Can fetch PnL value from db', async () => {
@@ -49,7 +49,7 @@ describe('Data Access implementation tests', () => {
 
 	it('Can update PnL value into db', async () => {
 		await expect(dataAccess.updatePnLValue({ userId: testDataPnL[0].userId, pnlValue: 50.5 })).resolves.not.toThrowError();
-		await expect(dbConnection.redis.zscore(DATABASE_CONFIG.REDIS_SORTED_SET_NAME, testDataPnL[0].userId)).resolves.toBe("50.5");
+		await expect(dbConnection.redis.zscore(DATABASE_CONFIG.REDIS_SORTED_SET_NAME, testDataPnL[0].userId)).resolves.toBe('50.5');
 	});
 
 	it('Can fetch rank by userId', async () => {

@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
-import ValidationError from "../common/errors/ValidationError";
-import id from "../common/id";
-import DataAccess from "../db/DataAccess";
-import GetLeaderboard from "../GetLeaderboard";
+import ValidationError from '../common/errors/ValidationError';
+import id from '../common/id';
+import DataAccess from '../db/DataAccess';
+import GetLeaderboard from '../GetLeaderboard';
 
 jest.mock('../db/DataAccess');
 
@@ -12,13 +12,13 @@ describe('Get Leaderboard use case tests', () => {
 		userId: id.createId(),
 		pnlValue: faker.datatype.number({ min: -100, max: 300, precision: 0.1 }),
 	}));
-	const testDataUsernames: { [userId: string]: string} = {}
+	const testDataUsernames: { [userId: string]: string} = {};
 	testDataPnL.forEach(({ userId }) => {
 		testDataUsernames[userId] = faker.internet.userName();
 	});
 	mockDataAccess.fetchUsernamesByUserIds.mockImplementation(async (userIds) => Object.fromEntries(Object.entries(testDataUsernames).filter(([userId, username]) => userIds.includes(userId))));
 	mockDataAccess.fetchRankingsByRange.mockImplementation(async (from, to) => testDataPnL.sort((a, b) => b.pnlValue - a.pnlValue).slice(from - 1, to));
-	const resultsPerPage = 10
+	const resultsPerPage = 10;
 	const getLeaderboard = new GetLeaderboard(mockDataAccess, resultsPerPage);
 
 	afterEach(() => {

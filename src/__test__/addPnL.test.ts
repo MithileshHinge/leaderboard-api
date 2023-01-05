@@ -28,7 +28,7 @@ describe('Add PnL use case tests', () => {
 			it(`Should throw error for userId: ${userId}`, async () => {
 				await expect(addPnL.add(userId, -20)).rejects.toThrow(ValidationError);
 				expect(mockDataAccess.insertPnLValue).not.toHaveBeenCalled();
-			})
+			});
 		});
 	});
 

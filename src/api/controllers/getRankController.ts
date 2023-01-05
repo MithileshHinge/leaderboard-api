@@ -11,7 +11,7 @@ const getRankController: IBaseController = async (req) => {
 		return {
 			statusCode: HTTPResponseCode.OK,
 			body: rank,
-		}
+		};
 	} catch (err: any) {
 		return handleControllerError(err);
 	}

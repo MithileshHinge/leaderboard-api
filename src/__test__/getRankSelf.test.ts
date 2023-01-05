@@ -29,7 +29,7 @@ describe('Get Rank Self use case tests', () => {
 			it(`Should throw error for userId: ${userId}`, async () => {
 				await expect(getRankSelf.getRank(userId)).rejects.toThrow(ValidationError);
 				expect(mockDataAccess.fetchRankByUserId).not.toHaveBeenCalled();
-			})
+			});
 		});
 	});
 

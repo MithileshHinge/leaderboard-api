@@ -12,7 +12,7 @@ const patchPnLController: IBaseController = async (req) => {
 
 		return {
 			statusCode: HTTPResponseCode.OK,
-		}
+		};
 	} catch (err: any) {
 		return handleControllerError(err);
 	}

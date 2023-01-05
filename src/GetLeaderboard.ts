@@ -16,7 +16,7 @@ export default class GetLeaderboard {
 	 * @returns Promise to return array of {userId, pnlValue} objects sorted by rank
 	 */
 	async getPage(pageNo: number | string) {
-		let pageNoValidated: number = typeof pageNo === 'number' ? pageNo : parseInt(pageNo, 10);
+		const pageNoValidated: number = typeof pageNo === 'number' ? pageNo : parseInt(pageNo, 10);
 		if (pageNoValidated <= 0) {
 			throw new ValidationError('pageNo is invalid');
 		}

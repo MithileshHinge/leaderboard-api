@@ -1,5 +1,5 @@
-import Redis from "ioredis";
-import { DATABASE_CONFIG } from "../config";
+import Redis from 'ioredis';
+import { DATABASE_CONFIG } from '../config';
 
 export default class DbConnection {
 	public redis: Redis;

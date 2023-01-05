@@ -29,7 +29,7 @@ describe('Update PnL use case tests', () => {
 			it(`Should throw error for userId: ${userId}`, async () => {
 				await expect(updatePnL.update(userId, -20)).rejects.toThrow(ValidationError);
 				expect(mockDataAccess.updatePnLValue).not.toHaveBeenCalled();
-			})
+			});
 		});
 	});
 
