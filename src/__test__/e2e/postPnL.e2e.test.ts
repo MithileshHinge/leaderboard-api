@@ -4,7 +4,7 @@ import { DATABASE_CONFIG, JSON_SECRET } from '../../config';
 import id from '../../common/id';
 import app from '../../api/server';
 import { faker } from '@faker-js/faker';
-import { dbConnection } from '../../api/useCases';
+import { dbConnection } from '../../db';
 
 describe('POST /pnl e2e tests', () => {
 

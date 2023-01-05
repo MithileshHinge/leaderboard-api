@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { faker } from '@faker-js/faker';
 import jwt from 'jsonwebtoken';
-import { dbConnection } from '../../api/useCases';
+import { dbConnection } from '../../db';
 import id from '../../common/id';
 import { DATABASE_CONFIG, JSON_SECRET } from '../../config';
 import app from '../../api/server';

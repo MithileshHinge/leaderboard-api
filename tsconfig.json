@@ -103,6 +103,6 @@
   "exclude": [
     "./dist",
     "./*.js",
-    "./src/__tests__",
+    "./src/__test__",
   ],
 }

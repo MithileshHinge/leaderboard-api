@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import request from 'supertest';
 import jwt from 'jsonwebtoken';
 import app from '../../api/server';
-import { dbConnection } from '../../api/useCases';
+import { dbConnection } from '../../db';
 import { forEachAsync } from '../../common/helpers';
 import id from '../../common/id';
 import { DATABASE_CONFIG, JSON_SECRET } from '../../config';
@@ -18,7 +18,7 @@ describe('GET /rank e2e tests', () => {
 	const pnlValue = testDataPnL[0].pnlValue;
 	const rank = testDataPnL.sort((a, b) => b.pnlValue - a.pnlValue).indexOf(testDataPnLFirst) + 1;
 
-	const testDataUsernames: { [userId: string]: string} = {}
+	const testDataUsernames: { [userId: string]: string} = {};
 	testDataPnL.forEach(({ userId }) => {
 		testDataUsernames[userId] = faker.internet.userName();
 	});

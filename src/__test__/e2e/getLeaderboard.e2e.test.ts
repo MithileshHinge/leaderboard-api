@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import request from 'supertest';
 import app from '../../api/server';
-import { dbConnection } from '../../api/useCases';
+import { dbConnection } from '../../db';
 import { forEachAsync } from '../../common/helpers';
 import id from '../../common/id';
 import { DATABASE_CONFIG, RESULTS_PER_PAGE } from '../../config';
@@ -12,7 +12,7 @@ describe('GET /leaderboard e2e tests', () => {
 		pnlValue: faker.datatype.number({ min: -100, max: 300, precision: 0.00001 }),
 	}));
 
-	const testDataUsernames: { [userId: string]: string} = {}
+	const testDataUsernames: { [userId: string]: string} = {};
 	testDataPnL.forEach(({ userId }) => {
 		testDataUsernames[userId] = faker.internet.userName();
 	});

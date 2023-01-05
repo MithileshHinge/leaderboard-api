@@ -2,7 +2,7 @@
   "name": "leaderboard-api",
   "version": "1.0.0",
   "description": "Leaderboard API",
-  "main": "src/api/api.ts",
+  "main": "src/api/index.ts",
   "scripts": {
     "test": "nodemon --exec jest",
     "start:dev": "NODE_ENV=development nodemon",
