@@ -50,4 +50,11 @@ export interface IDataAccess {
 	 * @returns Promise to return object map of userIds to usernames, username is null for non-existent userIds
 	 */
 	fetchUsernamesByUserIds(userIds: string[]): Promise<{ [userId: string] : string | null}>;
+
+	/**
+	 * Count the number of PnL entries in the db
+	 * @throws DatabaseError if operation failed
+	 * @returns Promise to return the total count
+	 */
+	countTotalPnLEntries(): Promise<number>;
 }

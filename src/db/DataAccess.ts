@@ -82,6 +82,17 @@ export default class DataAccess implements IDataAccess {
 		}
 	}
 
+	async countTotalPnLEntries(): Promise<number> {
+		try {
+			const result = await this.redis.zcount(DATABASE_CONFIG.REDIS_SORTED_SET_NAME, -Infinity, +Infinity);
+			console.log(typeof result);
+			console.log(result);
+			return result;
+		} catch (err: any) {
+			this.handleDatabaseError(err, 'Failed to count total PnL entries in db');
+		}
+	}
+
 	handleDatabaseError(err: any, message: string): never {
 		const databaseError = new DatabaseError(message);
 		databaseError.stack = err.stack;

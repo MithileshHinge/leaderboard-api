@@ -12,7 +12,7 @@ describe('Data Access implementation tests', () => {
 
 	const testDataPnL = new Array(50).fill(null).map((item) => ({
 		userId: id.createId(),
-		pnlValue: faker.datatype.number({ min: -100, max: 300, precision: 0.1 }),
+		pnlValue: faker.datatype.number({ min: -100, max: 300, precision: 0.00001 }),
 	}));
 
 	const testDataUsernames: { [userId: string]: string} = {};
@@ -77,5 +77,9 @@ describe('Data Access implementation tests', () => {
 	it('Can fetch usernames by userIds', async () => {
 		await expect(dbConnection.redis.mset(testDataUsernames)).resolves.not.toThrowError();
 		await expect(dataAccess.fetchUsernamesByUserIds(Object.keys(testDataUsernames))).resolves.toEqual(testDataUsernames);
+	});
+
+	it('Can count total PnL entries', async () => {
+		await expect(dataAccess.countTotalPnLEntries()).resolves.toStrictEqual(testDataPnL.length);
 	});
 });

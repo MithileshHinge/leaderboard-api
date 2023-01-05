@@ -41,4 +41,15 @@ export default class GetLeaderboard {
 			pnlValue,
 		}));
 	}
+
+	/**
+	 * Get the total number of pages in the leaderboard
+	 * @returns Promise to return the total num pages
+	 */
+	async getTotalPages() {
+		const totalPnLEntries = await this.dataAccess.countTotalPnLEntries();
+		const totalPages = Math.ceil(totalPnLEntries / this.RESULTS_PER_PAGE);
+
+		return totalPages;
+	}
 }

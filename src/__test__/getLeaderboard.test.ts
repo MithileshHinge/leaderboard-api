@@ -58,4 +58,10 @@ describe('Get Leaderboard use case tests', () => {
 		const totalPages = Math.ceil(testDataPnL.length / resultsPerPage);
 		await expect(getLeaderboard.getPage(totalPages + 1)).resolves.toStrictEqual([]);
 	});
+
+	it('Can count totalPages', async () => {
+		const totalPages = Math.ceil(testDataPnL.length / resultsPerPage);
+		mockDataAccess.countTotalPnLEntries.mockResolvedValueOnce(testDataPnL.length);
+		await expect(getLeaderboard.getTotalPages()).resolves.toStrictEqual(totalPages);
+	});
 });
