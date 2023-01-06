@@ -8,6 +8,8 @@ import { DATABASE_CONFIG } from '../config';
 import { dbConnection } from '../db';
 
 async function seedData() {
+	await dbConnection.redis.flushall();
+
 	const testDataPnL = new Array(220).fill(null).map((item) => ({
 		userId: id.createId(),
 		pnlValue: faker.datatype.number({ min: -100, max: 300, precision: 0.00001 }),
@@ -17,6 +19,13 @@ async function seedData() {
 	testDataPnL.forEach(({ userId }) => {
 		testDataUsernames[userId] = faker.internet.userName();
 	});
+
+	// Create users who have not submitted PnL values
+	for (let i=0; i < 50; i++) {
+		const userId = id.createId();
+		if (i < 3) console.log(userId);
+		testDataUsernames[userId] = faker.internet.userName();
+	}
 
 	await forEachAsync(testDataPnL, async ({userId, pnlValue}) => {
 		await dbConnection.redis.zadd(DATABASE_CONFIG.REDIS_SORTED_SET_NAME, pnlValue, userId);

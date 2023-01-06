@@ -12,6 +12,7 @@ export default function authorizationMiddleware(req: Request, res: Response, nex
 		if (typeof payload === 'string') return res.status(HTTPResponseCode.UNAUTHORIZED).json({});
 		req.user = { userId: payload.userId };
 	} catch (err: any) {
+		console.log(err);
 		return res.status(HTTPResponseCode.UNAUTHORIZED).json({});
 	}
 
